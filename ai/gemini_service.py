@@ -4,8 +4,7 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
-genai.configure(api_key=os.getenv("GEMINI_API_KEY"))
-
+genai.configure(api_key="AQ.Ab8RN6JMTkYxCWl0Zf0DngIcdJCVFmt1H-fFgaa1j7GCQ1Dfww")
 model = genai.GenerativeModel("gemini-2.5-flash")
 
 def analyze_issue(description):
