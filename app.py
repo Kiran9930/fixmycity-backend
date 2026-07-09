@@ -89,5 +89,17 @@ def delete_report(index):
         "success": True
     })
 
+
+import os
+
+@app.route("/api/check-key")
+def check_key():
+    key = os.getenv("GEMINI_API_KEY")
+
+    return {
+        "exists": key is not None,
+        "length": len(key) if key else 0
+    }
+
 if __name__ == "__main__":
     app.run(debug=True)
