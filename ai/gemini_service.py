@@ -1,15 +1,16 @@
 import os
+import google.generativeai as genai
 from dotenv import load_dotenv
-from google import genai
 
 load_dotenv()
 
-client = genai.Client(api_key=os.getenv("GEMINI_API_KEY"))
+genai.configure(api_key=os.getenv("GEMINI_API_KEY"))
 
+model = genai.GenerativeModel("gemini-2.5-flash")
 
 def analyze_issue(description):
-    try:
-        prompt = f"""
+
+    prompt = f"""
 You are an AI assistant for a civic issue reporting platform.
 
 Analyze the civic issue described below.
@@ -20,12 +21,9 @@ Issue:
 Return ONLY valid JSON.
 """
 
-        response = client.models.generate_content(
-            model="gemini-2.5-flash",
-            contents=prompt
-        )
-
-        return response.text.strip()
+    try:
+        response = model.generate_content(prompt)
+        return response.text
 
     except Exception as e:
-        return f"ERROR: {str(e)}"
+        return f"ERROR: {e}"
